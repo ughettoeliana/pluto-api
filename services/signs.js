@@ -1,4 +1,6 @@
 import ephemeris from "ephemeris";
+import pkg from "astrologyjs";
+const { Person, ChartFactory } = pkg;
 
 const getPlanetsPosition = (req, res) => {
   const birthdate = req.query.birthdate;
@@ -8,15 +10,11 @@ const getPlanetsPosition = (req, res) => {
 
   console.log("birthdate", birthdate);
 
-  const fecha = new Date(birthdate);
-  console.log("fecha", fecha);
+  const date = new Date(birthdate);
+  console.log("date", date);
 
-  //const dateObj = new Date("2015-08-10T17:09:01.000+08:00");
+  var result = ephemeris.getAllPlanets(date, longitude, latitude, 0);
 
-  // parameters: ephemeris.getAllPlanets(dateObj, longitude, latitude, height);
-  var result = ephemeris.getAllPlanets(fecha, longitude, latitude, 0);
-  // 10.0014
-  // 53.5653
   if (result) {
     // Agrega el signo del zodiaco al objeto result
     Object.keys(result.observed).forEach((planet) => {
@@ -43,7 +41,7 @@ const getSignForLongitude = (longitude) => {
     { sign: "Cáncer", start: 90, end: 120 },
     { sign: "Leo", start: 120, end: 150 },
     { sign: "Virgo", start: 150, end: 210 },
-    { sign: "Libra", start: 180, end: 120 },
+    { sign: "Libra", start: 180, end: 210 },
     { sign: "Escorpio", start: 210, end: 240 },
     { sign: "Sagitario", start: 240, end: 270 },
     { sign: "Capricornio", start: 270, end: 300 },
@@ -55,11 +53,29 @@ const getSignForLongitude = (longitude) => {
     (zodiac) => longitude >= zodiac.start && longitude < zodiac.end
   );
 
-  console.log("sign", sign);
   return sign ? sign.sign : "Desconocido";
 };
 
+// const createPerson = async (date, longitude, latitude) => {
+//   try {
+//     person = await Person.create("Kenji", "1974-02-17T23:30Z", {lat: 37.4381927, lng: -79.18932});
+//     return person;
+//   } catch (err) {
+//     console.error("Error al crear la persona:", err);
+//     throw err;
+//   }
+// };
 
+// const createChart = async (date, longitude, latitude) => {
+//   try {
+//     const person = await createPerson(date, longitude, latitude);
 
+//     const natalChart = await ChartFactory.create("User's Natal Chart", person);
+
+//     console.log("Natal Chart:", natalChart);
+//   } catch (err) {
+//     console.error("Error al crear el gráfico:", err);
+//   }
+// };
 
 export default getPlanetsPosition;

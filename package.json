@@ -12,6 +12,8 @@
   "type": "module",
   "dependencies": {
     "astral": "^0.1.0",
+    "astrology-js": "^0.6.0",
+    "astrologyjs": "^1.3.1",
     "cors": "^2.8.5",
     "ephemeris": "^2.0.0",
     "express": "^4.18.2",
